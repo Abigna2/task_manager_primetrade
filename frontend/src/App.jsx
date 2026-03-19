@@ -152,8 +152,8 @@ function LoginPage({ onSwitch }) {
     <div style={{ minHeight: "100vh", background: C.bg, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
       <div className="fade-in" style={{ width: "100%", maxWidth: 380 }}>
         <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 13, color: C.muted, letterSpacing: "0.1em", marginBottom: 8 }}>TASK MANAGER</div>
-          <div style={{ fontSize: 28, fontWeight: 300, color: C.text, letterSpacing: "-0.02em" }}>Welcome back</div>
+          <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 28, color: C.muted, letterSpacing: "0.1em", marginBottom: 8 }}>TASK MANAGER</div>
+          <div style={{ fontSize: 13, fontWeight: 300, color: C.text, letterSpacing: "-0.02em" }}>Welcome back</div>
         </div>
 
         <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 14, padding: 28 }}>

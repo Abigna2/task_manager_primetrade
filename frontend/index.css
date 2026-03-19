@@ -1,0 +1,11 @@
+@media (min-width: 768px) {
+  .sidebar-nav {
+    transform: translateX(0) !important;
+  }
+  .hamburger {
+    display: none !important;
+  }
+  .main-content {
+    margin-left: 220px !important;
+  }
+}
