@@ -1,219 +1,206 @@
-Task Manager API
+# Task Manager API
 
-This project is a simple task management system built with FastAPI, PostgreSQL, and a React frontend.
-It demonstrates user authentication with JWT, role-based access control (user vs admin), and full CRUD operations for tasks.
+A full-stack task management system built with FastAPI, PostgreSQL, and React.
+Demonstrates JWT authentication, role-based access control, and full CRUD operations — deployed and production-ready.
 
-The project was created as part of a backend developer assignment to showcase API design, authentication, database integration, and frontend interaction.
+## Live Demo
 
-Tech Stack
-Layer            Technology
-Backend          Python 3.11, FastAPI, SQLAlchemy
-Database         PostgreSQL (Neon Serverless)
-Authentication   JWT (python-jose), bcrypt
-Frontend         React + Vite
-API Docs         Swagger UI
+| Service | URL |
+|---|---|
+| Frontend | https://task-manager-primetrade.vercel.app |
+| API (Swagger UI) | https://task-manager-primetrade.onrender.com/docs |
+| GitHub | https://github.com/Abigna2/task_manager_primetrade |
 
-Project Structure
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Python 3.11, FastAPI, SQLAlchemy |
+| Database | PostgreSQL (Neon Serverless) |
+| Authentication | JWT (python-jose), bcrypt |
+| Frontend | React + Vite |
+| API Docs | Swagger UI |
+| Deployment | Render (backend), Vercel (frontend) |
+| Container | Docker + Docker Compose |
+
+---
+
+## Project Structure
+
+```
 task-manager-project/
 │
-├── backend/
-│   ├── app/
-│   │   ├── api/v1/
-│   │   │   ├── endpoints/
-│   │   │   │   ├── auth.py
-│   │   │   │   ├── tasks.py
-│   │   │   │   └── users.py
-│   │   │   ├── deps.py
-│   │   │   └── router.py
-│   │   │
-│   │   ├── core/
-│   │   │   ├── config.py
-│   │   │   └── security.py
-│   │   │
-│   │   ├── db/
-│   │   │   └── session.py
-│   │   │
-│   │   ├── models/
-│   │   │   └── models.py
-│   │   │
-│   │   ├── schemas/
-│   │   │   └── schemas.py
-│   │   │
-│   │   └── main.py
+├── project/
+│   ├── backend/
+│   │   ├── app/
+│   │   │   ├── api/v1/
+│   │   │   │   ├── endpoints/
+│   │   │   │   │   ├── auth.py
+│   │   │   │   │   ├── tasks.py
+│   │   │   │   │   └── users.py
+│   │   │   │   ├── deps.py
+│   │   │   │   └── router.py
+│   │   │   ├── core/
+│   │   │   │   ├── config.py
+│   │   │   │   └── security.py
+│   │   │   ├── db/
+│   │   │   │   └── session.py
+│   │   │   ├── models/
+│   │   │   │   └── models.py
+│   │   │   ├── schemas/
+│   │   │   │   └── schemas.py
+│   │   │   └── main.py
+│   │   ├── Dockerfile
+│   │   ├── requirements.txt
+│   │   └── .env.example
 │   │
-│   ├── requirements.txt
-│   └── .env.example
+│   └── frontend/
+│       ├── src/
+│       │   ├── App.jsx
+│       │   └── main.jsx
+│       ├── index.html
+│       ├── package.json
+│       └── vite.config.js
 │
-└── frontend/
-    ├── src/
-    │   ├── App.jsx
-    │   └── main.jsx
-    ├── index.html
-    ├── package.json
-    └── vite.config.js
-Setup Instructions
-Prerequisites
+├── docker-compose.example.yml
+└── README.md
+```
 
-Make sure the following are installed:
+---
 
-Python 3.11+
+## Quick Start (Docker)
 
-PostgreSQL
+The easiest way to run locally:
 
-Node.js 18+
+```bash
+# 1. Clone the repo
+git clone https://github.com/Abigna2/task_manager_primetrade
+cd task-manager-project
 
-1. Database Setup
+# 2. Copy the example compose file and add your credentials
+cp docker-compose.example.yml docker-compose.yml
+# Edit docker-compose.yml and fill in DATABASE_URL and SECRET_KEY
 
-Create a PostgreSQL database:
+# 3. Run with Docker
+docker-compose up --build
+```
 
-CREATE DATABASE taskdb;
-2. Backend Setup
+API runs at: http://localhost:10000/docs
 
-i) Navigate to the backend folder:
+---
 
-cd backend
+## Manual Setup (Without Docker)
 
-ii) Create a virtual environment:
+### Prerequisites
+- Python 3.11+
+- PostgreSQL
+- Node.js 18+
 
+### Backend Setup
+
+```bash
+cd project/backend
 python -m venv venv
 
-iii) Activate the environment:
-
-Windows:
-
+# Windows
 venv\Scripts\activate
-
-Mac/Linux:
-
+# Mac/Linux
 source venv/bin/activate
 
-iv) Install dependencies:
-
 pip install -r requirements.txt
-
-v) Copy the environment file:
-
 cp .env.example .env
-
-vi) Edit .env and add your PostgreSQL credentials and a secret key.
-
-vii) Start the server:
+# Edit .env with your credentials
 
 uvicorn app.main:app --reload
+```
 
-The backend will run at:
+Backend runs at: http://localhost:8000
 
-http://localhost:8000
-3. Frontend Setup
+### Frontend Setup
 
-i) Navigate to the frontend folder:
-
-cd frontend
-
-ii) Install dependencies:
-
+```bash
+cd project/frontend
 npm install
-
-iii) Run the frontend:
-
 npm run dev
+```
 
-The frontend will run at:
+Frontend runs at: http://localhost:5173
 
-http://localhost:5173
-API Endpoints
+---
 
-All endpoints are prefixed with:
+## API Endpoints
 
-/api/v1
-Base API URL
+All endpoints prefixed with `/api/v1`
 
-http://localhost:8000/api/v1
+### Authentication
 
-Authentication
-Method	Endpoint	Description
-POST	/api/v1/auth/register	Register a new user
-POST	/api/v1/auth/login	Login and receive JWT token
-Tasks
-Method	Endpoint	Description
-POST	/api/v1/tasks	Create a new task
-GET	/api/v1/tasks	List tasks
-GET	/api/v1/tasks/{id}	Get a specific task
-PUT	/api/v1/tasks/{id}	Update a task
-DELETE	/api/v1/tasks/{id}	Delete a task
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | /api/v1/auth/register | Register a new user |
+| POST | /api/v1/auth/login | Login and receive JWT token |
 
-Regular users can manage their own tasks, while admins can access all tasks.
+### Tasks
 
-Users
-Method	Endpoint	Description
-GET	/api/v1/users/me	Get current user profile
-GET	/api/v1/users	List all users (admin only)
-PATCH	/api/v1/users/{id}/deactivate	Deactivate a user (admin only)
-API Documentation
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | /api/v1/tasks | Create a new task |
+| GET | /api/v1/tasks | List tasks |
+| GET | /api/v1/tasks/{id} | Get a specific task |
+| PUT | /api/v1/tasks/{id} | Update a task |
+| DELETE | /api/v1/tasks/{id} | Delete a task |
 
-FastAPI automatically generates API documentation.
+### Users
 
-Swagger UI:
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | /api/v1/users/me | Get current user profile |
+| GET | /api/v1/users | List all users (admin only) |
 
-http://localhost:8000/docs
+---
 
-ReDoc:
+## Role-Based Access Control
 
-http://localhost:8000/redoc
-Role-Based Access Control
-Action	                User	Admin
-Register / Login        ✓	     ✓
-Create Task	            ✓      	 ✓
-View Own Tasks	        ✓	     ✓
-View All Tasks	        ✗      	 ✓
-Edit/Delete Own Tasks	✓	     ✓
-Edit/Delete Any Task	✗    	 ✓
-View All Users	        ✗	     ✓
+| Action | User | Admin |
+|---|---|---|
+| Register / Login | ✓ | ✓ |
+| Create Task | ✓ | ✓ |
+| View Own Tasks | ✓ | ✓ |
+| View All Tasks | ✗ | ✓ |
+| Edit/Delete Own Tasks | ✓ | ✓ |
+| Edit/Delete Any Task | ✗ | ✓ |
+| View All Users | ✗ | ✓ |
 
-**To promote a user to admin:
+To promote a user to admin:
+```sql
+UPDATE users SET role = 'admin' WHERE email = 'your@email.com';
+```
 
-UPDATE users
-SET role = 'admin'
-WHERE email = 'admin@example.com';
-Security
+---
 
-Basic security practices implemented in the project:
+## Security
 
-1. Passwords hashed using bcrypt
+- Passwords hashed using bcrypt
+- Authentication via JWT tokens
+- Request validation using Pydantic schemas
+- SQLAlchemy ORM prevents SQL injection
+- CORS configured for frontend access only
 
-2. Authentication handled using JWT tokens
+---
 
-3. Request validation using Pydantic
+## Database Schema
 
-4. SQLAlchemy ORM prevents SQL injection
-
-5. CORS configured for frontend access
-
-Database Schema
-
-Users table:
-
+```
 users
-  id
-  email
-  username
-  hashed_password
-  role
-  is_active
-  created_at
-
-Tasks table:
+  id, email, username, hashed_password, role, is_active, created_at
 
 tasks
-  id
-  title
-  description
-  status
-  owner_id
-  created_at
-  updated_at
-Scalability
+  id, title, description, status, owner_id, created_at, updated_at
+```
 
-The project is designed with a modular structure so components like authentication, users, and tasks can be separated into independent services if needed.
+---
 
-More details are included in SCALABILITY.md.
+## Scalability
+
+See [SCALABILITY.md](./SCALABILITY.md) for full details on horizontal scaling, caching, microservices architecture, and Docker deployment strategies.
